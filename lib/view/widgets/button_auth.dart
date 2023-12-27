@@ -18,7 +18,11 @@ class ButtonAuth extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(
+          color: Colors.white,
+          fontFamily: "tajawal",
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

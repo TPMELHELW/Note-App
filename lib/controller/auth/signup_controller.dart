@@ -1,37 +1,52 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:note_app/core/constant/enum.dart';
+import 'package:note_app/view/widgets/awesome_widget.dart';
 
 class SignupController extends GetxController {
-  late TextEditingController email;
-  late TextEditingController password;
-  late TextEditingController repassword;
-  late TextEditingController firstName;
-  late TextEditingController lastName;
-  GlobalKey<FormState> formState = GlobalKey();
-  // late TextEditingController email;
+  late TextEditingController email, password, repassword, firstName, lastName;
 
-  signUp() async {
+  GlobalKey<FormState> formState = GlobalKey();
+
+  late StatusRequest statusRequest;
+  signUp(BuildContext context) async {
     var formData = formState.currentState;
     if (formData!.validate()) {
       formData.save();
+      statusRequest = StatusRequest.loading;
+      update();
       try {
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email.text,
           password: password.text,
         );
+        FirebaseAuth.instance.currentUser!.sendEmailVerification();
+        // print()
+        statusRequest = StatusRequest.success;
+        // ignore: use_build_context_synchronously
+        awesome(context, "Please confirm Your Email before LogIn",
+            DialogType.success);
+        update();
         return userCredential;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
+          // ignore: use_build_context_synchronously
+          awesome(context, "Weak Password", DialogType.info);
         } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          statusRequest = StatusRequest.failed;
+          update();
+          // ignore: use_build_context_synchronously
+          awesome(context, "Email Already in use", DialogType.error);
         }
       } catch (e) {
+        //TODO:MAKE STATUSREQUEST
         print(e);
       }
     }
+    update();
   }
 
   @override
@@ -41,7 +56,8 @@ class SignupController extends GetxController {
     repassword = TextEditingController();
     firstName = TextEditingController();
     lastName = TextEditingController();
-    // email = TextEditingController();
+    statusRequest = StatusRequest.none;
+
     super.onInit();
   }
 }

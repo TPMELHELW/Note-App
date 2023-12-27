@@ -19,6 +19,10 @@ class TextFieldAuth extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           hintText: hint,
+          hintStyle: const TextStyle(
+            fontFamily: "tajawal",
+            fontWeight: FontWeight.bold,
+          ),
           filled: true,
           fillColor: Colors.grey[400],
           border: OutlineInputBorder(

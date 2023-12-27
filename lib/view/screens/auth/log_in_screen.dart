@@ -18,6 +18,7 @@ class LogIn extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Form(
+            key: controller.formState,
             child: Column(
               children: [
                 TextFieldAuth(
@@ -40,7 +41,10 @@ class LogIn extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          ButtonAuth(text: "LogIn")
+          ButtonAuth(
+            text: "LogIn",
+            onpress: () => controller.logIn(context),
+          )
         ],
       ),
     );
