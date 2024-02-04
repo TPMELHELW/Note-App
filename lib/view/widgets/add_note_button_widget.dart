@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AddNoteButton extends StatelessWidget {
   final Widget child;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   const AddNoteButton(
       {super.key, required this.child, required this.onPressed});
 
@@ -11,10 +11,11 @@ class AddNoteButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF3B3B3B),
-            minimumSize: const Size(10, 60),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12))),
+          minimumSize: const Size(20, 60),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         child: child);
   }
 }

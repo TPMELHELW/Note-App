@@ -5,8 +5,8 @@ class TabBarController extends GetxController
     with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   List<Tab> tabs = [
-    Tab(text: "Login"),
-    Tab(text: "Register"),
+    const Tab(text: "Login"),
+    const Tab(text: "Register"),
   ];
   @override
   void onInit() {

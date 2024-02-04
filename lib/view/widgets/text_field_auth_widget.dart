@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:note_app/middleware/services.dart';
 
 class TextFieldAuth extends StatelessWidget {
   final TextEditingController controller;
@@ -12,6 +14,7 @@ class TextFieldAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyServices myServices = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextFormField(
@@ -24,7 +27,10 @@ class TextFieldAuth extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           filled: true,
-          fillColor: Colors.grey[400],
+          fillColor: myServices.sharedpref.getBool("dark") == true
+              ? Colors.grey[800]
+              : Colors.grey[400],
+          // fillColor: ,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,

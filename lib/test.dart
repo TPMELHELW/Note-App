@@ -1,83 +1,35 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:note_app/controller/tab_controller.dart';
+import 'dart:io';
 
-// class Test extends StatelessWidget {
-//   const Test({super.key});
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     TabBarController controller = Get.put(TabBarController());
-//     return Scaffold(
-//       appBar: AppBar(backgroundColor: Colors.indigo),
-//       body: Column(
-//         children: [
-//           Stack(
-//             children: [
-//               ClipPath(
-//                 clipper: Clipper(),
-//                 child: Container(
-//                   padding: EdgeInsets.all(80),
-//                   decoration: BoxDecoration(
-//                     color: Colors.indigo,
-//                   ),
-//                   height: 200,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           TabBar(controller: controller.tabController, tabs: const [
-//             Tab(
-//               text: "mahmoud",
-//             ),
-//             Tab(
-//               text: "tarek",
-//             ),
-//             Tab(
-//               text: "elhelw",
-//             ),
-//           ]),
-//           Expanded(
-//             child: TabBarView(
-//                 controller: controller.tabController,
-//                 children: const [
-//                   Text(
-//                     "hello",
-//                     textAlign: TextAlign.center,
-//                   ),
-//                   Text(
-//                     "eng",
-//                     textAlign: TextAlign.center,
-//                   ),
-//                   Text(
-//                     "rofida",
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ]),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
+class Test extends StatelessWidget {
+  const Test({super.key});
 
-// class Clipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     Path path = Path();
-//     path.moveTo(size.width, size.height * 0.488);
-//     path.quadraticBezierTo(size.width * 0.89875, size.height * 0.9,
-//         size.width * 0.499, size.height * 0.926);
-//     path.quadraticBezierTo(size.width * 0.0995, size.height * 0.903,
-//         size.width * -0.001, size.height * 0.49);
-//     path.lineTo(size.width * -0.001, 0);
-//     path.lineTo(size.width * 0.998, 0);
-
-//     return path;
-//   }
-
-//   @override
-//   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-//     return true;
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    XFile? file;
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+              onPressed: () async {
+                ImagePicker imagePicker = ImagePicker();
+                file = await imagePicker.pickImage(source: ImageSource.gallery);
+                // file = responce;
+              },
+              child: Text("Choose Image")),
+          ElevatedButton(
+              onPressed: () {
+                Reference refroot = FirebaseStorage.instance.ref();
+                Reference refdir = refroot.child('images/${file!.name}');
+                refdir.putFile(File(file!.path));
+              },
+              child: Text("Upload Image")),
+        ],
+      ),
+    );
+  }
+}

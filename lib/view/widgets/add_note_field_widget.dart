@@ -20,7 +20,7 @@ class AddNoteField extends StatelessWidget {
       controller: controller,
       validator: validator,
       maxLines: null,
-      style: const TextStyle(color: Colors.white),
+      // style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle,
