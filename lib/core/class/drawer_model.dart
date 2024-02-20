@@ -7,11 +7,10 @@ import 'package:note_app/view/screens/settings_screen.dart';
 import 'package:note_app/view/screens/welcome_screen.dart';
 
 class DrawerData {
-  final String title, subtitle;
+  final String title;
   final void Function()? onpress;
   final Widget? trailing;
   DrawerData(
-    this.subtitle,
     this.trailing,
     this.onpress, {
     required this.title,
@@ -22,7 +21,6 @@ HomeScreenController controller = Get.put(HomeScreenController());
 // bool value = true;
 List<DrawerData> data = [
   DrawerData(
-    "Settings",
     null,
     () {
       Get.to(() => SettingsScreen(
@@ -32,7 +30,6 @@ List<DrawerData> data = [
     title: "Settings",
   ),
   DrawerData(
-    "Dark Mode",
     GetBuilder<HomeScreenController>(
         // init: DrawController(),
         builder: (controller) {
@@ -46,10 +43,10 @@ List<DrawerData> data = [
     () {},
     title: "Dark Mode",
   ),
-  DrawerData("Info", null, () {
+  DrawerData(null, () {
     Get.to(() => const InfoScreen());
   }, title: "Info"),
-  DrawerData("Sign Out", null, () async {
+  DrawerData(null, () async {
     await FirebaseAuth.instance.signOut();
     Get.delete<HomeScreenController>();
     Get.offAll(() => const WelcomeScreen());

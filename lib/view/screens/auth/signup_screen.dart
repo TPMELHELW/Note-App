@@ -85,7 +85,7 @@ class SignUp extends StatelessWidget {
                                 : null,
                             radius: 100,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           ButtonAuth(
@@ -94,7 +94,7 @@ class SignUp extends StatelessWidget {
                                 controller.uploadImage();
                                 // controller.cropperImage();
                               }),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           ButtonAuth(

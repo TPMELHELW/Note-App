@@ -79,7 +79,7 @@ class SignupController extends GetxController {
     update();
   }
 
-  uploadImage() async {
+ Future<void> uploadImage() async {
     ImagePicker imagePicker = ImagePicker();
     file = await imagePicker.pickImage(source: ImageSource.gallery);
     disFile = File(file!.path);

@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:note_app/controller/auth/signup_controller.dart';
 import 'package:note_app/core/constant/enum.dart';
 import 'package:note_app/core/functions/check_internet.dart';
 import 'package:note_app/view/screens/home_screen.dart';
@@ -16,7 +17,7 @@ class LogInController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   late StatusRequest statusRequest;
-  logIn(BuildContext context) async {
+  Future<void> logIn(BuildContext context) async {
     var formData = formState.currentState;
     try {
       if (await checkInternet()) {
@@ -33,6 +34,8 @@ class LogInController extends GetxController {
           );
           if (userCredential.user!.emailVerified) {
             statusRequest = StatusRequest.success;
+            Get.delete<LogInController>();
+            Get.delete<SignupController>();
             Get.offAll(() => const HomeScreen());
             update();
           } else {
@@ -41,6 +44,7 @@ class LogInController extends GetxController {
         }
       } else {
         statusRequest = StatusRequest.offline;
+        update();
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

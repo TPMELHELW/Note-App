@@ -14,7 +14,7 @@ import 'package:note_app/view/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreenController extends GetxController {
-  List inf = [];
+  List<Map<String, dynamic>> inf = [];
   ThemeData customDarkTheme = ThemeData.dark();
   ThemeData customLightTheme = ThemeData.light();
   XFile? file;
@@ -27,7 +27,7 @@ class HomeScreenController extends GetxController {
       FirebaseFirestore.instance.collection("users");
   late StatusRequest statusRequest;
 
-  getData() async {
+  Future<void> getData() async {
     Query<Map<String, dynamic>> userinf = userref.where("userId",
         isEqualTo: FirebaseAuth.instance.currentUser!.uid);
 
@@ -37,7 +37,7 @@ class HomeScreenController extends GetxController {
         }));
   }
 
-  onpress(bool val) {
+  void onpress(bool val) {
     if (Get.isDarkMode) {
       Get.changeTheme(customLightTheme);
       share.setBool("dark", false);
@@ -49,7 +49,7 @@ class HomeScreenController extends GetxController {
     update();
   }
 
-  editImage() async {
+  Future<void> editImage() async {
     try {
       if (await checkInternet()) {
         ImagePicker imagePicker = ImagePicker();
@@ -76,7 +76,7 @@ class HomeScreenController extends GetxController {
     update();
   }
 
-  editName() async {
+  Future<void> editName() async {
     try {
       statusRequest = StatusRequest.loading;
       update();
@@ -107,7 +107,7 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  resetPassword() async {
+  Future<void> resetPassword() async {
     try {
       statusRequest = StatusRequest.loading;
       update();

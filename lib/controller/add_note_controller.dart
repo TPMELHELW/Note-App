@@ -10,12 +10,11 @@ class AddNoteController extends GetxController {
   late TextEditingController title, body;
   GlobalKey<FormState> formState = GlobalKey();
   late StatusRequest statusRequest;
-  // bool isEdit = false;
 
   CollectionReference<Map<String, dynamic>> noteref =
       FirebaseFirestore.instance.collection('notes');
-  addNote(BuildContext context) async {
-    var formData = formState.currentState;
+  Future<void> addNote(BuildContext context) async {
+    FormState? formData = formState.currentState;
     if (formData!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
@@ -28,18 +27,17 @@ class AddNoteController extends GetxController {
           "time": DateFormat('yyy-MM-dd HH:mm:ss').format(now)
         });
         statusRequest = StatusRequest.success;
-        Get.offAll(() => HomeScreen());
+        Get.offAll(() => const HomeScreen());
       } catch (e) {
-        statusRequest = StatusRequest.success;
-
-        print(e);
+        statusRequest = StatusRequest.failed;
+        update();
       }
     }
     update();
   }
 
-  editNote(BuildContext context, String noteId) async {
-    var formData = formState.currentState;
+  Future<void> editNote(BuildContext context, String noteId) async {
+    FormState? formData = formState.currentState;
     if (formData!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
@@ -52,11 +50,11 @@ class AddNoteController extends GetxController {
           "time": DateFormat('yyy-MM-dd HH:mm:ss').format(now)
         });
         statusRequest = StatusRequest.success;
-        Get.off(() => HomeScreen());
+        update();
+        Get.off(() => const HomeScreen());
       } catch (e) {
         statusRequest = StatusRequest.success;
-
-        print(e);
+        update();
       }
     }
     update();

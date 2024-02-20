@@ -31,12 +31,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      // darkThem,
       theme: myServices.sharedpref.getBool("dark") == true
           ? ThemeData.dark()
           : ThemeData.light(),
       home: auth == null ? const WelcomeScreen() : const HomeScreen(),
-      // home: Test(),
     );
   }
 }
